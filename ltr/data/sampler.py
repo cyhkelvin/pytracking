@@ -683,7 +683,6 @@ class SequentialTargetCandidateMatchingSampler(torch.utils.data.Dataset):
         ids_end = random.sample(valid_ids[len(valid_ids)//2:], k=num_end)
         return ids_begin + ids_end
 
-
     def __getitem__(self, index):
         """
         args:
@@ -733,3 +732,13 @@ class SequentialTargetCandidateMatchingSampler(torch.utils.data.Dataset):
             data[key] = val
 
         return self.processing(data)
+
+
+class HCATSampler(TrackingSampler):
+    """ See TrackingSampler."""
+
+    def __init__(self, datasets, p_datasets, samples_per_epoch, max_gap,
+                 num_test_frames=1, num_train_frames=1, processing=no_processing, frame_sample_mode='interval'):
+        super().__init__(datasets=datasets, p_datasets=p_datasets, samples_per_epoch=samples_per_epoch, max_gap=max_gap,
+                         num_test_frames=num_test_frames, num_train_frames=num_train_frames, processing=processing,
+                         frame_sample_mode=frame_sample_mode)
